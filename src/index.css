@@ -1,0 +1,11 @@
+
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer components {
+    .custom1 {
+        @apply text-blue-500;
+    }
+}

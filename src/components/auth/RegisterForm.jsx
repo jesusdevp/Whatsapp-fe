@@ -2,18 +2,28 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { signUpSchema } from "../../utils/validation";
 import { AuthInput } from "./AuthInput";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "../../features/userSlice";
 
 export const RegisterForm = () => {
 
-    const { status } = useSelector((state) => state.userLogged)
+    const { status, error } = useSelector((state) => state.userLogged)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(signUpSchema)
   });
-  const onSubmit = data => console.log(data);
+
+  const onSubmit = async data => {
+    let res = await dispatch( registerUser({ ...data, picture: '' }) )
+
+    if(res.payload.user) {
+        navigate('/')
+    }
+  }
 
   return (
     <div className='h-screen w-full flex items-center justify-center overflow-hidden' >
@@ -54,11 +64,19 @@ export const RegisterForm = () => {
 
                 <AuthInput 
                     name='password'
-                    type='text'
+                    type='password'
                     placeholder='Password'
                     register={ register }
                     error={ errors?.password?.message }
                 />
+
+                {
+                    error && <div>
+                        <p className='text-red-400'>
+                            { error }
+                        </p>
+                    </div>
+                }
                
                 <button 
                     type='submit'

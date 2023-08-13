@@ -6,6 +6,7 @@ import { Register } from '../pages/Register'
 
 export const Navigation = () => {
   return (
+    <div className='dark' >
     <BrowserRouter>
             <Routes>
               <Route exact path='/' element={ <Home /> }  />
@@ -14,5 +15,6 @@ export const Navigation = () => {
               <Route path='/*' element={ <Navigate to='/' replace /> } />
             </Routes>
     </BrowserRouter>
+    </div>
   )
 }

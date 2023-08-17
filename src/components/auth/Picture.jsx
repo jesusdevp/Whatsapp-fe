@@ -69,7 +69,7 @@ export const Picture = ({ redeablePicture, setPicture, setRedeablePicture }) => 
             id='picture' 
             hidden 
             ref={ inputRef }
-            accept='image/png,image/jpg,image/webp'
+            accept='image/png,image/jpg,image/jpeg,image/webp'
             onChange={ handlePicture }
         />
 

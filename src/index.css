@@ -5,7 +5,13 @@
 @import 'tailwindcss/utilities';
 
 @layer components {
-    .custom1 {
-        @apply text-blue-500;
+    .container {
+        @apply w-[1700px] h-full;
+    }
+    .btn {
+        @apply w-[40px] h-[40px] rounded-full flex items-center justify-center active:bg-dark_hover_1;
+    }
+    .px16 {
+        @apply px-[16px];
     }
 }

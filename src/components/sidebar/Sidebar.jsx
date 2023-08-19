@@ -1,4 +1,5 @@
 import { SidebarHeader } from "./header"
+import { Notifications } from "./notifications/index"
 
 
 export const Sidebar = () => {
@@ -6,6 +7,9 @@ export const Sidebar = () => {
     <div className='w-[40%] h-full select-none' >
         {/* SidebarHeader */}
         <SidebarHeader />
+
+        {/* Notifications */}
+        <Notifications />
     </div>
   )
 }

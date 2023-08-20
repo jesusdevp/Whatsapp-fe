@@ -19,9 +19,22 @@
         line-height: 21px;
         @apply text-dark_text_1;
       }
-      .textSecondary {
+    .textSecondary {
         font-size: 14px;
         line-height: 19px;
         @apply text-dark_text_2;
+    }
+    .input {
+        @apply w-full dark:bg-dark_bg_2 p-1.5 dark:text-dark_text_1 rounded-lg flex-1 outline-none;
       }
+}
+
+/*----Animations----*/
+.rotateAnimation {
+    animation: rotate 0.3s forwards;
+  }
+@keyframes rotate {
+0% {
+    transform: rotate(-90deg);
+}
 }

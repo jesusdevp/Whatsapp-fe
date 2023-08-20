@@ -1,6 +1,4 @@
-import { Sidebar } from "../components/sidebar/index"
-
-
+import { Sidebar } from "../components/sidebar"
 
 export const Home = () => {
   return (

@@ -8,15 +8,15 @@ import { useSelector } from 'react-redux'
 export const Navigation = () => {
 
   const { user } = useSelector((state) => state.user)
-  const { access_token } = user
+  const { token } = user
   
   return (
     <div className='dark' >
     <BrowserRouter>
             <Routes>
-              <Route exact path='/' element={ access_token ?  <Home /> : <Navigate to='/login' /> }  />
-              <Route path='/login' element={ !access_token ? <Login /> : <Navigate to='/' /> } />
-              <Route path='/register' element={ !access_token ? <Register /> : <Navigate to='/' />} />
+              <Route exact path='/' element={ token ?  <Home /> : <Navigate to='/login' /> }  />
+              <Route path='/login' element={ !token ? <Login /> : <Navigate to='/' /> } />
+              <Route path='/register' element={ !token ? <Register /> : <Navigate to='/' />} />
               <Route path='/*' element={ <Navigate to='/' replace /> } />
             </Routes>
     </BrowserRouter>

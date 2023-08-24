@@ -7,7 +7,7 @@ export const SidebarHeader = () => {
 
     const { user } = useSelector((state) => state.user)
 
-    const [showMenu, setShowMenu] = useState(true)
+    const [showMenu, setShowMenu] = useState(false)
 
   return (
     <div className='h-[50px] dark:bg-dark_bg_2 flex items-center px16' >

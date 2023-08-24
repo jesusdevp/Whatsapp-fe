@@ -24,7 +24,11 @@ export const Conversation = ({ conver }) => {
                     <div>
                         <div className='flex items-center gap-x-1 dark:text-dark_text_2'  >
                             <div className='flex-1 items-center gap-x-1 dark:text-dark_text_2'  >
-                                <p> { conver.latestMessage?.message } </p>
+                                <p> { 
+                                    conver.latestMessage?.message.length > 30
+                                    ? `${ conver.latestMessage?.message.substring(0, 30) }...` 
+                                    : conver.latestMessage?.message  }
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -33,7 +37,10 @@ export const Conversation = ({ conver }) => {
             {/* right */}
             <div className='flex flex-col gap-y-4 items-end text-xs' >
                 <span className='dark:text-dark_text_2' >
-                    { dateHandler( conver.createdAt ) }
+                {conver.latestMessage?.createdAt
+                    ? dateHandler(conver.latestMessage?.createdAt)
+                    : ''
+              }
                 </span>
             </div>
         </div>

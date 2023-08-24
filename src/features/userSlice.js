@@ -40,6 +40,38 @@ export const loginUser = createAsyncThunk('auth/login', async( values, { rejectW
     }
 })
 
+export const checkTokenUser = createAsyncThunk('auth/refreshtoken', async (token, { rejectWithValue }) => {
+
+    try {
+        
+        const { data } = await axios.post(`${ AUTH_ENDPOINT }/refreshtoken`, {
+            token
+        })
+
+        return data
+
+    } catch (error) {
+        return rejectWithValue(error.response.data.error.message)
+    }
+
+})
+
+export const logoutUser = createAsyncThunk('auth/logout', async( _, { rejectWithValue } ) => {
+
+    try {
+        
+        const { data } = await axios.post(`${ AUTH_ENDPOINT }/logout`)
+
+        return data;
+        
+
+    } catch (error) {
+        return rejectWithValue(error.response)
+    }
+
+
+})
+
 export const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -73,7 +105,7 @@ export const userSlice = createSlice({
             state.status = 'failed',
             state.error = action.payload
         })
-        builder.addCase(loginUser.pending, (state, action) => {
+        .addCase(loginUser.pending, (state, action) => {
             state.status = 'loading'
         })
         .addCase(loginUser.fulfilled, (state, action) => {
@@ -82,6 +114,18 @@ export const userSlice = createSlice({
             state.user = action.payload.user
         })
         .addCase(loginUser.rejected, (state, action) => {
+            state.status = 'failed',
+            state.error = action.payload
+        })
+        .addCase(checkTokenUser.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        .addCase(checkTokenUser.fulfilled, (state, action) => {
+            state.status = 'succeeded',
+            state.error = ''
+            state.user = action.payload.user
+        })
+        .addCase(checkTokenUser.rejected, (state, action) => {
             state.status = 'failed',
             state.error = action.payload
         })

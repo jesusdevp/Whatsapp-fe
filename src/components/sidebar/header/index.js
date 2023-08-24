@@ -1,3 +1,4 @@
+import { Menu } from "./Menu";
 import { SidebarHeader } from "./SidebarHeader";
 
-export { SidebarHeader }
+export { SidebarHeader, Menu }

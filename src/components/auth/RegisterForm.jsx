@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { signUpSchema } from "../../utils/validation";
@@ -6,7 +6,7 @@ import { AuthInput } from "./AuthInput";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
-import { changeStatus, registerUser } from "../../features/userSlice";
+import { changeStatus, registerUser, resetError } from "../../features/userSlice";
 import { Picture } from "./Picture";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ const cloud_name = import.meta.env.VITE_CLOUD_NAME
 
 export const RegisterForm = () => {
 
-    const { status, error } = useSelector((state) => state.userLogged)
+    const { status, error } = useSelector((state) => state.user)
     const [ picture, setPicture ] = useState()
     const [ redeablePicture, setRedeablePicture ] = useState('')
     const dispatch = useDispatch()
@@ -24,6 +24,14 @@ export const RegisterForm = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(signUpSchema)
   });
+
+  useEffect(() => {
+    
+    return () => {
+        if( error ) dispatch( resetError() )
+    }
+  }, [])
+  
 
   const onSubmit = async data => {
 

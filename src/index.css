@@ -6,7 +6,7 @@
 
 @layer components {
     .container {
-        width: calc(100% - 38px);
+        width: 100%;
         max-width: 1600px;
     }
     .btn {

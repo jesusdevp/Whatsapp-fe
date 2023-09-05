@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { signInSchema } from "../../utils/validation";
@@ -6,7 +6,7 @@ import { AuthInput } from "./AuthInput";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
-import { changeStatus, loginUser } from "../../features/userSlice";
+import { changeStatus, loginUser, resetError } from "../../features/userSlice";
 
 export const LoginForm = () => {
 
@@ -17,6 +17,14 @@ export const LoginForm = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm({
     resolver: yupResolver(signInSchema)
   });
+
+  useEffect(() => {
+    
+    return () => {
+        
+        if( error ) dispatch( resetError() )
+    }
+  }, [])
 
   const onSubmit = async data => {
 

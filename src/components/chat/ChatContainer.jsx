@@ -4,6 +4,7 @@ import { ChatHeader } from "./header/ChatHeader"
 import { ChatMessages } from "./messages/ChatMessages"
 import { useEffect } from "react"
 import { getConversationsMessages } from "../../features/chatSlice"
+import { ChatActions } from "./actions/ChatActions"
 
 export const ChatContainer = () => {
 
@@ -33,6 +34,8 @@ export const ChatContainer = () => {
             <ChatHeader />
 
             <ChatMessages />
+
+            <ChatActions />
         </div>
     </div>
   )

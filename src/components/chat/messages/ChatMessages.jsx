@@ -8,7 +8,7 @@ export const ChatMessages = () => {
     const { user } = useSelector((state) => state.user)
 
   return (
-    <div className="mb-[60px] h-screen bg-[url('../../../../public/assets/background-chat.jpg')] bg-cover bg-no-repeat" >
+    <div className="mb-[60px] bg-[url('../../../../public/assets/background-chat.jpg')] bg-cover bg-no-repeat" >
 
         <div className='scrollbar overflow_scrollbar overflow-auto py-2 px-[5%]' >
             { messages && messages.map((message) => (

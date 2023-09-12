@@ -72,6 +72,28 @@ export const getConversationsMessages = createAsyncThunk('conversation/messages'
     }
 })
 
+export const sendMessage = createAsyncThunk('message/send', async (values, { rejectWithValue }) => {
+
+    const { token, message, conver_id, files} = values
+
+    try {
+        
+        const { data } =  await axios.post( MESSAGE_ENDPOINT,
+            { message, conver_id, files },
+            {
+                headers: {
+                    Authorization: `Bearer ${ token }`
+                }
+            }
+        )
+
+        return data;
+
+    } catch (error) {
+        return rejectWithValue(error.response.data.error.message)
+    }
+})
+
 export const chatSlice = createSlice({
     name: 'chat',
     initialState,
@@ -111,6 +133,23 @@ export const chatSlice = createSlice({
             state.messages = action.payload
         })
         builder.addCase(getConversationsMessages.rejected, (state, action) => {
+            state.status = 'failed',
+            state.error = action.payload
+        })
+        builder.addCase(sendMessage.pending, (state, action) => {
+            state.status = 'loading'
+        })
+        builder.addCase(sendMessage.fulfilled, (state, action) => {
+            state.status = 'succeded',
+            state.messages = [ ...state.messages, action.payload ];
+            let conversation = { ...action.payload.conversation, latestMessage: action.payload }
+            let newConvers = [ ...state.conversations ].filter(
+                (c) => c._id !== conversation._id
+            )
+            newConvers.unshift(conversation);
+            state.conversations = newConvers
+        })
+        builder.addCase(sendMessage.rejected, (state, action) => {
             state.status = 'failed',
             state.error = action.payload
         })

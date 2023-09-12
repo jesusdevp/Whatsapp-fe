@@ -1,7 +1,7 @@
 import { Contact } from "./Contact"
 
 
-export const SearchResults = ({ searchResults }) => {
+export const SearchResults = ({ searchResults, setSearchResults }) => {
   return (
     <div className='w-full convers scrollbar' >
         {/* heading */}
@@ -16,7 +16,8 @@ export const SearchResults = ({ searchResults }) => {
                 searchResults && searchResults.map((user) => (
                     <Contact
                         key={ user._id }
-                        contact={ user } 
+                        contact={ user }
+                        setSearchResults={ setSearchResults }
                     />
                 ))
             }

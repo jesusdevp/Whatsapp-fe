@@ -4,18 +4,20 @@ import { Conversation } from "./Conversation"
 
 export const Conversations = () => {
 
-    const { conversations } = useSelector(state => state.chat)
+    const { conversations, activeConversation } = useSelector(state => state.chat)
 
   return (
     <div className='convers scrollbar' >
         <ul>
         {
             conversations && 
-                conversations.map((conver) => (
-                    <Conversation 
-                        key={ conver._id }
-                        conver={ conver }
-                    />
+                conversations
+                    .filter((c) => c.latestMessage || c._id === activeConversation._id)
+                    .map((conver) => (
+                        <Conversation 
+                            key={ conver._id }
+                            conver={ conver }
+                        />
             ))
         }
         </ul>

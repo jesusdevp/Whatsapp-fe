@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export const Input = ({ message, setMessage }) => {
+export const Input = ({ message, setMessage, textRef }) => {
 
     const handleChange = (e) => {
         setMessage( e.target.value )
@@ -15,6 +15,7 @@ export const Input = ({ message, setMessage }) => {
             placeholder='Type a message'
             value={ message }
             onChange={ handleChange }
+            ref={ textRef }
         />
     </div>
   )

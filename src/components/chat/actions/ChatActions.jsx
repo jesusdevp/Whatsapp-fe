@@ -1,7 +1,7 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { SendIcon } from "../../../svg"
 import { Attachments } from "./Attachments"
-import { EmojiPicker } from "./EmojiPicker"
+import { EmojiPickerApp } from "./EmojiPicker"
 import { Input } from "./Input"
 import { useDispatch, useSelector } from "react-redux"
 import { sendMessage } from "../../../features/chatSlice"
@@ -10,12 +10,16 @@ import { ClipLoader } from "react-spinners"
 
 export const ChatActions = () => {
 
+    const textRef = useRef(null) 
+
     const dispatch = useDispatch()
     const { activeConversation, status } = useSelector((state) => state.chat)
     const { user } = useSelector((state) => state.user)
     const { token } = user
 
-    const [ message, setMessage ] = useState('')
+    const [message, setMessage] = useState("");
+    const [showPicker, setShowPicker] = useState(false);
+    
 
     const values = {
         message,
@@ -40,13 +44,20 @@ export const ChatActions = () => {
     >
         <div className='w-full flex items-center gap-x-2' >
             <ul className='flex gap-x-2' >
-                <EmojiPicker />
+                <EmojiPickerApp 
+                    textRef={ textRef }
+                    message={ message }
+                    setMessage={ setMessage }
+                    showPicker={ showPicker }
+                    setShowPicker={ setShowPicker }
+                />
                 <Attachments />
             </ul>
 
             <Input 
                 message={ message }
                 setMessage={ setMessage }
+                textRef={ textRef }
             />
             
             {

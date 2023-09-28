@@ -3,8 +3,9 @@ import { Sidebar } from "../components/sidebar"
 import { useDispatch, useSelector } from "react-redux"
 import { getConversations } from "../features/chatSlice"
 import { ChatContainer, WhatsAppHome } from "../components/chat"
+import SocketContext from "../context/SocketContext"
 
-export const Home = () => {
+const Home = ({ socket }) => {
 
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.user)
@@ -34,3 +35,11 @@ export const Home = () => {
     </div>
   )
 }
+
+const HomeWithSocket = (props) => (
+  <SocketContext.Consumer>
+    { (socket) => <Home {...props} socket={ socket } /> }
+  </SocketContext.Consumer>
+)
+
+export default HomeWithSocket;

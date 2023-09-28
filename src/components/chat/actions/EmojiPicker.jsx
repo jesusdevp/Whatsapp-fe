@@ -3,7 +3,7 @@ import { CloseIcon, EmojiIcon } from "../../../svg"
 import EmojiPicker from "emoji-picker-react"
 
 
-export const EmojiPickerApp = ({ textRef, message, setMessage, showPicker, setShowPicker }) => {
+export const EmojiPickerApp = ({ textRef, message, setMessage, showPicker, setShowPicker, setShowAttachments }) => {
 
   
   const [cursorPosition, setCursorPosition] = useState(null)
@@ -34,7 +34,10 @@ export const EmojiPickerApp = ({ textRef, message, setMessage, showPicker, setSh
         <button 
           className='btn' 
           type='button'
-          onClick={() => setShowPicker((prev) => !prev)}
+          onClick={() => {
+            setShowPicker((prev) => !prev)
+            setShowAttachments(false)
+          }}
         >
             {
               showPicker ? (

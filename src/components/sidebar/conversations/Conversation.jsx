@@ -9,6 +9,7 @@ export const Conversation = ({ conver }) => {
 
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.user)
+    const { activeConversation } = useSelector((state) => state.chat)
     const { token } = user
 
     const values = {
@@ -22,7 +23,11 @@ export const Conversation = ({ conver }) => {
     
   return (
     <li 
-        className='list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]'
+    className={`list-none h-[72px] w-full dark:bg-dark_bg_1 hover:${
+        conver._id !== activeConversation._id ? "dark:bg-dark_bg_2" : ""
+      } cursor-pointer dark:text-dark_text_1 px-[10px] ${
+        conver._id === activeConversation._id ? "dark:bg-dark_hover_1" : ""
+      }`}
         onClick={() => openConversation()}
     >
         

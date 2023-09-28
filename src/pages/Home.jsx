@@ -20,7 +20,7 @@ export const Home = () => {
   
 
   return (
-    <div className='h-screen w-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden' >
+    <div className='h-screen w-screen dark:bg-dark_bg_1 flex items-center justify-center overflow-hidden' >
 
       <div className='container h-screen flex' >
         {/* Sidebar */}

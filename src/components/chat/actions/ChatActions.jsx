@@ -15,6 +15,7 @@ export const ChatActions = () => {
     const dispatch = useDispatch();
     const [showPicker, setShowPicker] = useState(false);
     const [showAttachments, setShowAttachments] = useState(false)
+    const [loading, setLoading] = useState(false)
     const { activeConversation, status } = useSelector((state) => state.chat)
     const { user } = useSelector((state) => state.user)
     const { token } = user
@@ -33,9 +34,12 @@ export const ChatActions = () => {
 
         e.preventDefault()
 
+        setLoading(true)
+
         await dispatch( sendMessage(values) )
 
         setMessage('')
+        setLoading(false)
     }
 
   return (
@@ -67,7 +71,7 @@ export const ChatActions = () => {
             />
             
             {
-                status === 'loading' ? (
+                status === 'loading' && loading ? (
                     <div className='btn' >
                         <ClipLoader color='#E9EDEF' />
                     </div>

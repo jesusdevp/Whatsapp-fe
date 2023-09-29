@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux"
-import { Conversation } from "./Conversation"
-
+import { Conversation } from "."
 
 export const Conversations = () => {
 
@@ -14,7 +13,7 @@ export const Conversations = () => {
                 conversations
                     .filter((c) => c.latestMessage || c._id === activeConversation._id)
                     .map((conver) => (
-                        <Conversation 
+                        <Conversation
                             key={ conver._id }
                             conver={ conver }
                         />

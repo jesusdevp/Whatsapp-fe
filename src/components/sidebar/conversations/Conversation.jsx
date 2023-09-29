@@ -2,10 +2,11 @@ import React from 'react'
 import { dateHandler } from '../../../utils/date'
 import { openCreateConversation } from '../../../features/chatSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { getConversationById } from '../../../utils/chat'
+import { getConversationById, getConversationByName, getConversationByPicture } from '../../../utils/chat'
 import { capitalize } from '../../../utils/strings'
+import SocketContext from '../../../context/SocketContext'
 
-export const Conversation = ({ conver }) => {
+const Conversation = ({ conver, socket }) => {
 
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.user)
@@ -17,8 +18,9 @@ export const Conversation = ({ conver }) => {
         token
     }
 
-    const openConversation = () => {
-        dispatch(openCreateConversation(values))
+    const openConversation = async () => {
+        await dispatch(openCreateConversation(values))
+        socket.emit('join conversation', activeConversation._id)
     }
     
   return (
@@ -37,14 +39,14 @@ export const Conversation = ({ conver }) => {
                 {/* user picture conversation */}
                 <div className='relative h-[50px] min-w-[50px] max-w-[50px] rounded-full overflow-hidden'>
                     <img 
-                        src={ conver.picture } 
-                        alt={ conver.name } 
+                        src={ getConversationByPicture(user, conver.users) } 
+                        alt='picture'
                         className='w-full h-full object-cover' 
                     />
                 </div>
                 {/* Conversation name and message */}
                 <div className='w-full flex flex-col' >
-                    <h1 className='font-bold flex items-center gap-x-2' > { capitalize( conver.name ) } </h1>
+                    <h1 className='font-bold flex items-center gap-x-2' > { capitalize( getConversationByName(user, conver.users) ) } </h1>
 
                     <div>
                         <div className='flex items-center gap-x-1 dark:text-dark_text_2'  >
@@ -74,3 +76,11 @@ export const Conversation = ({ conver }) => {
     </li>
   )
 }
+
+const ConversationWithSocket = (props) => (
+    <SocketContext.Consumer>
+      { (socket) => <Conversation {...props} socket={ socket } /> }
+    </SocketContext.Consumer>
+  )
+
+export default ConversationWithSocket;

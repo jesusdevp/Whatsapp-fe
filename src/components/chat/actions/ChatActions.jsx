@@ -6,9 +6,10 @@ import { Input } from "./Input"
 import { useDispatch, useSelector } from "react-redux"
 import { sendMessage } from "../../../features/chatSlice"
 import { ClipLoader } from "react-spinners"
+import SocketContext from "../../../context/SocketContext"
 
 
-export const ChatActions = () => {
+const ChatActions = ({ socket }) => {
 
     const textRef = useRef(null) 
 
@@ -36,7 +37,8 @@ export const ChatActions = () => {
 
         setLoading(true)
 
-        await dispatch( sendMessage(values) )
+        let newMsg = await dispatch( sendMessage(values) )
+        socket.emit('send message', newMsg.payload)
 
         setMessage('')
         setLoading(false)
@@ -85,3 +87,11 @@ export const ChatActions = () => {
     </form>
   )
 }
+
+const ChatActionsWithSocket = (props) => (
+    <SocketContext.Consumer>
+        {(socket) => <ChatActions { ...props } socket={ socket } />}
+    </SocketContext.Consumer>
+)
+
+export default ChatActionsWithSocket;

@@ -1,4 +1,5 @@
-import { Conversation } from "./Conversation";
+
 import { Conversations } from "./Conversations";
+import Conversation from "./Conversation"
 
 export { Conversations, Conversation }

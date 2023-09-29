@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { Sidebar } from "../components/sidebar"
 import { useDispatch, useSelector } from "react-redux"
-import { getConversations } from "../features/chatSlice"
+import { getConversations, updateMessagesAndConversations } from "../features/chatSlice"
 import { ChatContainer, WhatsAppHome } from "../components/chat"
 import SocketContext from "../context/SocketContext"
 
@@ -11,6 +11,13 @@ const Home = ({ socket }) => {
   const { user } = useSelector((state) => state.user)
   const { activeConversation } = useSelector((state) => state.chat)
 
+  // join user into the socket io
+  useEffect(() => {
+
+    socket.emit('join', user._id)
+
+  }, [ user ])
+
   useEffect(() => {
     
     if( user ) {
@@ -18,6 +25,16 @@ const Home = ({ socket }) => {
     }
 
   }, [ user ])
+
+  // listening to received messages
+  useEffect(() => {
+
+    socket.on('receive message', (message) => {
+        dispatch(updateMessagesAndConversations(message))
+    
+    })
+
+  }, [])
   
 
   return (

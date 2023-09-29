@@ -1,3 +1,3 @@
-import { ChatActions } from "./ChatActions";
+import ChatActions from "./ChatActions";
 
 export { ChatActions }

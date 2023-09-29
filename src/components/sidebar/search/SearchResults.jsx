@@ -1,5 +1,4 @@
-import { Contact } from "./Contact"
-
+import Contact from "./Contact"
 
 export const SearchResults = ({ searchResults, setSearchResults }) => {
   return (

@@ -5,7 +5,7 @@ import { Search } from "./search"
 import { Conversations } from "./conversations"
 import { SearchResults } from "./search"
 
-export const Sidebar = () => {
+export const Sidebar = ({ onlineUsers }) => {
 
     const [searchResults, setSearchResults] = useState([])
 
@@ -31,7 +31,7 @@ export const Sidebar = () => {
           ) : (
             <>
               {/* conversations */}
-              <Conversations />
+              <Conversations onlineUsers={ onlineUsers } />
             </>
           )
         }

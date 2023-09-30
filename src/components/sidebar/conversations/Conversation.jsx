@@ -6,7 +6,7 @@ import { getConversationById, getConversationByName, getConversationByPicture } 
 import { capitalize } from '../../../utils/strings'
 import SocketContext from '../../../context/SocketContext'
 
-const Conversation = ({ conver, socket }) => {
+const Conversation = ({ conver, socket, online }) => {
 
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.user)
@@ -37,7 +37,7 @@ const Conversation = ({ conver, socket }) => {
             {/* left */}
             <div className='flex items-center gap-x-3'>
                 {/* user picture conversation */}
-                <div className='relative h-[50px] min-w-[50px] max-w-[50px] rounded-full overflow-hidden'>
+                <div className={`relative h-[50px] min-w-[50px] max-w-[50px] rounded-full overflow-hidden ${ online ? 'online' : ''}`}>
                     <img 
                         src={ getConversationByPicture(user, conver.users) } 
                         alt='picture'

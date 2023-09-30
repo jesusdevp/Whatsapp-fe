@@ -21,7 +21,7 @@ export const getConversationById = (user, users) => {
 
   export const checkOnlineStatus = (onlineUsers, user, users) => {
 
-    let converId = getConversationId(user, users)
+    let converId = getConversationById(user, users)
 
     let check = onlineUsers.find((u) => u.userId === converId)
 

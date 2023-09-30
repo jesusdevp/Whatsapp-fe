@@ -5,8 +5,9 @@ import { ChatMessages } from "./messages/ChatMessages"
 import { useEffect } from "react"
 import { getConversationsMessages } from "../../features/chatSlice"
 import ChatActions from "./actions/ChatActions"
+import { checkOnlineStatus } from "../../utils/chat"
 
-export const ChatContainer = () => {
+export const ChatContainer = ({ onlineUsers }) => {
 
     const dispatch = useDispatch()
     const { activeConversation, messages } = useSelector((state) => state.chat)
@@ -27,11 +28,13 @@ export const ChatContainer = () => {
 
     }, [ activeConversation ])
 
+    console.log(onlineUsers)
+
   return (
     <div className='relative w-full h-full border-l dark:border-l-dark_border_2 select-none overflow-hidden' >
         {/* container */}
         <div>
-            <ChatHeader />
+            <ChatHeader online={checkOnlineStatus(onlineUsers, user, activeConversation.users)} />
 
             <ChatMessages />
 

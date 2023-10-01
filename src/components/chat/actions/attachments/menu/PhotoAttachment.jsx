@@ -37,7 +37,7 @@ export const PhotoAttachment = () => {
                 reader.onload = ( e ) => {
                     dispatch(addFiles({ 
                         file: file, 
-                        imgData: e.target.result, 
+                        fileData: e.target.result, 
                         type: getFileType(file.type) }))
                 }
             }
@@ -58,7 +58,8 @@ export const PhotoAttachment = () => {
         <input 
             type="file" 
             hidden 
-            ref={ inputRef } 
+            ref={ inputRef }
+            multiple
             accept='image/png,image/jpeg,image/jpg,image/webp,image/gif,video/mp4,video/mpeg'
             onChange={handleImage}
         />

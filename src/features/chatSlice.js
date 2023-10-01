@@ -119,6 +119,9 @@ export const chatSlice = createSlice({
         addFiles: (state, action) => {
             console.log(action.payload)
             state.files = [ ...state.files, action.payload ]
+        },
+        clearFiles: (state, action) => {
+            state.files = []
         }
     },
     extraReducers(builder) {
@@ -142,7 +145,8 @@ export const chatSlice = createSlice({
         })
         builder.addCase(openCreateConversation.rejected, (state, action) => {
             state.status = 'failed',
-            state.error = action.payload
+            state.error = action.payload,
+            state.files = []
         })
         builder.addCase(getConversationsMessages.pending, (state, action) => {
             state.status = 'loading'
@@ -175,6 +179,11 @@ export const chatSlice = createSlice({
     }
 })
 
-export const { setActiveConversation, updateMessagesAndConversations, addFiles } = chatSlice.actions
+export const { 
+    setActiveConversation, 
+    updateMessagesAndConversations, 
+    addFiles,
+    clearFiles 
+} = chatSlice.actions
 
 export default chatSlice.reducer

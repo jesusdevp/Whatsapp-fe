@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import { getConversationsMessages } from "../../features/chatSlice"
 import ChatActions from "./actions/ChatActions"
 import { checkOnlineStatus } from "../../utils/chat"
+import { FilesPreview } from "./preview/files/FilesPreview"
 
 export const ChatContainer = ({ onlineUsers, typing }) => {
 
@@ -38,9 +39,17 @@ export const ChatContainer = ({ onlineUsers, typing }) => {
                 typing={ typing }
             />
 
-            <ChatMessages typing={ typing } />
+            {
+                files.length > 0 ? (
+                    <FilesPreview />
+                ) : (
+                    <>
+                        <ChatMessages typing={ typing } />
 
-            <ChatActions />
+                        <ChatActions />
+                    </>
+                )
+            }
         </div>
     </div>
   )

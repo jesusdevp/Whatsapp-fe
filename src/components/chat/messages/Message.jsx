@@ -22,7 +22,7 @@ export const Message = ({ message, me }) => {
                 {
                     !me ? (
                         <span>
-                            <TraingleIcon className='dark:fill-dark_bg_2 rotate-[60deg] absolute top-[-5px] -left-1.55' />
+                            <TraingleIcon className='dark:fill-dark_bg_2 rotate-[60deg] absolute top-[-5px] -left-1.5' />
                         </span>
                     ) : null
                 }

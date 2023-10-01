@@ -3,12 +3,12 @@ import { DotsIcon, SearchLargeIcon } from "../../../svg"
 import { capitalize } from "../../../utils/strings"
 import { getConversationByName, getConversationByPicture } from "../../../utils/chat"
 
-export const ChatHeader = ({ online }) => {
+export const ChatHeader = ({ online, typing }) => {
 
     const { activeConversation } = useSelector((state) => state.chat)
     const { user } = useSelector((state) => state.user)
 
-    const { name, picture } = activeConversation;
+    const { picture } = activeConversation;
 
   return (
     <div className='h-[59px] dark:bg-dark_bg_2 flex items-center px16 select-none' >
@@ -25,7 +25,7 @@ export const ChatHeader = ({ online }) => {
                     <h1 className='dark:text-white text-md font-bold' >
                         { capitalize(getConversationByName(user, activeConversation.users).split(' ')[0]) }
                     </h1>
-                    <span className='text-xs dark:text-dark_svg_2' >{ online ? "online" : "" }</span>
+                    <span className='text-xs dark:text-dark_svg_2' >{ typing === activeConversation._id ? 'typing...' :  online ? "online" : '' }</span>
                 </div>
             </div>
             <ul className='flex items-center gap-x-2.5' >

@@ -6,7 +6,7 @@ import { getConversationById, getConversationByName, getConversationByPicture } 
 import { capitalize } from '../../../utils/strings'
 import SocketContext from '../../../context/SocketContext'
 
-const Conversation = ({ conver, socket, online }) => {
+const Conversation = ({ conver, socket, online, typing }) => {
 
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.user)
@@ -18,9 +18,10 @@ const Conversation = ({ conver, socket, online }) => {
         token
     }
 
+
     const openConversation = async () => {
-        await dispatch(openCreateConversation(values))
-        socket.emit('join conversation', activeConversation._id)
+       let newConver =  await dispatch(openCreateConversation(values))
+        socket.emit('join conversation', newConver.payload._id)
     }
     
   return (
@@ -51,11 +52,18 @@ const Conversation = ({ conver, socket, online }) => {
                     <div>
                         <div className='flex items-center gap-x-1 dark:text-dark_text_2'  >
                             <div className='flex-1 items-center gap-x-1 dark:text-dark_text_2'  >
-                                <p> { 
-                                    conver.latestMessage?.message.length > 30
-                                    ? `${ conver.latestMessage?.message.substring(0, 30) }...` 
-                                    : conver.latestMessage?.message  }
-                                </p>
+                                {
+                                    typing === conver._id ? (
+                                        <p className='text-green_1' >Typing...</p>
+                                    ) : (
+                                        <p> { 
+                                            conver.latestMessage?.message.length > 30
+                                            ? `${ conver.latestMessage?.message.substring(0, 30) }...` 
+                                            : conver.latestMessage?.message  }
+                                        </p>
+                                    )
+                                }
+                               
                             </div>
                         </div>
                     </div>

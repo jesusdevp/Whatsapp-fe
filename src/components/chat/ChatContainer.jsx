@@ -10,7 +10,7 @@ import { checkOnlineStatus } from "../../utils/chat"
 export const ChatContainer = ({ onlineUsers, typing }) => {
 
     const dispatch = useDispatch()
-    const { activeConversation } = useSelector((state) => state.chat)
+    const { activeConversation, files } = useSelector((state) => state.chat)
     const { user } = useSelector((state) => state.user)
 
     const { token } = user

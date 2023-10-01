@@ -117,6 +117,7 @@ export const chatSlice = createSlice({
             state.conversations = newConvers
         },
         addFiles: (state, action) => {
+            console.log(action.payload)
             state.files = [ ...state.files, action.payload ]
         }
     },

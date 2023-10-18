@@ -3,7 +3,7 @@ import { CloseIcon } from "../../../../svg"
 import { clearFiles } from "../../../../features/chatSlice"
 
 
-export const Header = () => {
+export const Header = ({ activeIndex }) => {
 
     const dispatch = useDispatch()
     const { files } = useSelector((state) => state.chat)
@@ -22,7 +22,7 @@ export const Header = () => {
                 <CloseIcon className='dark:fill-dark_svg_1' />
             </div>
 
-            <h1 className="dark:text-dark_text_1 text-[15px]" >{ files[0]?.file?.name }</h1>
+            <h1 className="dark:text-dark_text_1 text-[15px]" >{ files[activeIndex]?.file?.name }</h1>
             <span></span>
         </div>
     </div>

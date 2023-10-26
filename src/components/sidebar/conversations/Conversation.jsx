@@ -21,7 +21,7 @@ const Conversation = ({ conver, socket, online, typing }) => {
 
     const openConversation = async () => {
        let newConver =  await dispatch(openCreateConversation(values))
-        socket.emit('join conversation', newConver.payload._id)
+        socket.emit('join conversation', newConver?.payload._id)
     }
     
   return (

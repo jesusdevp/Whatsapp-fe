@@ -122,6 +122,12 @@ export const chatSlice = createSlice({
         },
         clearFiles: (state, action) => {
             state.files = []
+        },
+        removeFiles: (state, action) => {
+            let index = action.payload
+            let files = [...state.files]
+            let fileToRemove = [files[index]]
+            state.files= files.filter((file) => !fileToRemove.includes(file))
         }
     },
     extraReducers(builder) {
@@ -141,7 +147,8 @@ export const chatSlice = createSlice({
         })
         builder.addCase(openCreateConversation.fulfilled, (state, action) => {
             state.status = 'succeded',
-            state.activeConversation = action.payload
+            state.activeConversation = action.payload,
+            state.files = []
         })
         builder.addCase(openCreateConversation.rejected, (state, action) => {
             state.status = 'failed',
@@ -171,6 +178,7 @@ export const chatSlice = createSlice({
             )
             newConvers.unshift(conversation);
             state.conversations = newConvers
+            state.files = []
         })
         builder.addCase(sendMessage.rejected, (state, action) => {
             state.status = 'failed',
@@ -183,7 +191,8 @@ export const {
     setActiveConversation, 
     updateMessagesAndConversations, 
     addFiles,
-    clearFiles 
+    clearFiles,
+    removeFiles
 } = chatSlice.actions
 
 export default chatSlice.reducer

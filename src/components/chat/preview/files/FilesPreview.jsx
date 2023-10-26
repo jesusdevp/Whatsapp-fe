@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { FileViewer } from "./FileViewer"
-import { HandleAndSend } from "./HandleAndSend"
+import HandleAndSend from "./HandleAndSend"
 import { Header } from "./Header"
 import { Input } from "./Input"
 
@@ -21,9 +21,10 @@ export const FilesPreview = () => {
                     setMessage={ setMessage }
                 />
 
-                <HandleAndSend 
+                <HandleAndSend
                     activeIndex={ activeIndex }
                     setActiveIndex={ setActiveIndex }
+                    message={ message }
                 />
             </div>
         </div>

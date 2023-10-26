@@ -6,6 +6,7 @@ import { useState } from "react"
 import { removeFiles, sendMessage } from "../../../../features/chatSlice"
 import SocketContext from "../../../../context/SocketContext"
 import { ClipLoader } from "react-spinners"
+import VideoThumbnail from "react-video-thumbnail"
 
 
 const HandleAndSend = ({ activeIndex, setActiveIndex, message, socket }) => {
@@ -59,10 +60,13 @@ const HandleAndSend = ({ activeIndex, setActiveIndex, message, socket }) => {
                         {
                             file.type === 'IMAGE'
                                 ? <img src={ file.fileData } alt="" className='w-full h-full object-cover' />
+                            : file.type === 'VIDEO' ? (
+                                    <VideoThumbnail videoUrl={ file.fileData } />
+                                )
                                 : <img src={`../../../../images/files/${ file.type }.png`} alt="" className='w-8 h-10 mt-1.5 ml-2.5' />
                         }
                         <div 
-                            className="removeFileIcon "
+                            className="removeFileIcon hidden"
                             onClick={() => handleRemoveFile(i)}
                         >
                             <CloseIcon  className='dark:fill-white absolute right-0 top-0 w-4 h-4' />

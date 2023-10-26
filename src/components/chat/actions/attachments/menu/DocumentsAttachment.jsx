@@ -14,8 +14,6 @@ export const DocumentsAttachment = () => {
     let files = Array.from(e.target.files)
     files.forEach((file) => {
 
-      console.log(file)
-
         if(
             file.type !== "application/pdf" &&
             file.type !== "text/plain" &&

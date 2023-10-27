@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { getConversations, updateMessagesAndConversations } from "../features/chatSlice"
 import { ChatContainer, WhatsAppHome } from "../components/chat"
 import SocketContext from "../context/SocketContext"
+import { Call } from "../components/chat/call/Call"
+
+const callData = {
+  receiveingCall: false,
+  callEnded: false
+}
 
 const Home = ({ socket }) => {
 
@@ -12,6 +18,8 @@ const Home = ({ socket }) => {
   const { activeConversation } = useSelector((state) => state.chat)
   const [ onlineUsers, setOnlineUsers ] = useState([])
   const [typing, setTyping] = useState(false)
+  const [call, setCall] = useState(callData)
+  const [callAccepted, setCallAccepted] = useState(false)
 
   // join user into the socket io
   useEffect(() => {
@@ -54,7 +62,8 @@ const Home = ({ socket }) => {
 
   
   return (
-    <div className='h-screen w-screen dark:bg-dark_bg_1 flex items-center justify-center overflow-hidden' >
+   <>
+       <div className='h-screen w-screen dark:bg-dark_bg_1 flex items-center justify-center overflow-hidden' >
 
       <div className='container h-screen flex' >
         {/* Sidebar */}
@@ -65,7 +74,9 @@ const Home = ({ socket }) => {
           : <WhatsAppHome />
         }
       </div>
-    </div>
+      </div>
+      <Call call={ call } setCall={ setCall } callAccepted={ callAccepted } />
+    </>
   )
 }
 

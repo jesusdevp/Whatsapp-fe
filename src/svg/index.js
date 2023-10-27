@@ -25,6 +25,8 @@ import LockIcon from "./Lock";
 import CallIcon from "./Call";
 import MuteIcon from "./Mute";
 import NoVideoIcon from "./NoVideo";
+import AddContactIcon from "./AddContact";
+
 export {
   CommunityIcon,
   StoryIcon,
@@ -53,4 +55,5 @@ export {
   CallIcon,
   MuteIcon,
   NoVideoIcon,
+  AddContactIcon
 };

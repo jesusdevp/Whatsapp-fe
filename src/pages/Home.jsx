@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Sidebar } from "../components/sidebar"
 import { useDispatch, useSelector } from "react-redux"
 import { getConversations, updateMessagesAndConversations } from "../features/chatSlice"
@@ -19,7 +19,10 @@ const Home = ({ socket }) => {
   const [ onlineUsers, setOnlineUsers ] = useState([])
   const [typing, setTyping] = useState(false)
   const [call, setCall] = useState(callData)
+  const [stream, setStream] = useState(callData)
   const [callAccepted, setCallAccepted] = useState(false)
+  const myVideo = useRef(null)
+  const userVideo = useRef(null)
 
   // join user into the socket io
   useEffect(() => {
@@ -75,7 +78,14 @@ const Home = ({ socket }) => {
         }
       </div>
       </div>
-      <Call call={ call } setCall={ setCall } callAccepted={ callAccepted } />
+      <Call 
+        call={ call } 
+        setCall={ setCall } 
+        callAccepted={ callAccepted }
+        myVideo={ myVideo }
+        userVideo={ userVideo }
+        stream={ stream }
+      />
     </>
   )
 }

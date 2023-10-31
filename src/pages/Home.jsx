@@ -30,6 +30,7 @@ const Home = ({ socket }) => {
   const [show, setShow] = useState(false)
   const myVideo = useRef()
   const userVideo = useRef()
+  const conectionRef = useRef()
 
   const { socketId } = call
 
@@ -97,6 +98,44 @@ const Home = ({ socket }) => {
         picture: user.picture
       })
     })
+
+    peer.on('stream', (stream) => {
+      console.log(stream)
+      userVideo.current.srcObject = stream
+    });
+
+    socket.on('call accepted', (signal) => {
+      setCallAccepted(true);
+      peer.signal(signal);
+    })
+
+    conectionRef.current = peer
+  }
+
+   //answer call  function
+   const answerCall = () => {
+    enableMedia();
+    setCallAccepted(true);
+
+    const peer = new Peer({
+      initiator: false,
+      trickle: false,
+      stream: stream
+    })
+
+    peer.on('signal', (data) => {
+      socket.emit('answer call', {
+        signal: data,
+        to: call.socketId
+      })
+    })
+
+    peer.on('stream', (stream) => {
+      userVideo.current.srcObject = stream
+    })
+
+    peer.signal(call.signal)
+    conectionRef.current = peer
   }
 
   const setupMedia = () => {
@@ -141,7 +180,7 @@ const Home = ({ socket }) => {
       setTyping(false)
     });
  
-  }, []) 
+  }, [])
 
   
   return (
@@ -166,6 +205,8 @@ const Home = ({ socket }) => {
           myVideo={ myVideo }
           userVideo={ userVideo }
           stream={ stream }
+          answerCall={ answerCall }
+          show={ show }
         />
       </div>
     </>

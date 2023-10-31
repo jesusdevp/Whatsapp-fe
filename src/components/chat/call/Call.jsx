@@ -6,7 +6,7 @@ import { Header } from "./Header"
 import { Ringing } from "./Ringing"
 
 
-export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream }) => {
+export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream, answerCall, show }) => {
 
     const { name, picture, receiveingCall, callEnded } = call
     const [showActions, setShowActions] = useState(false)
@@ -38,15 +38,20 @@ export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream }
             </div>
 
             {/* video stream */}
-            <div>
-                <video 
-                    ref={ userVideo }
-                    playsInline
-                    autoPlay
-                    className={toggle ? 'smallVideoCall' : 'largeVideoCall'}
-                    onClick={() => setToggle((prev) => !prev)}
-                ></video>
-            </div>    
+            {
+                callAccepted && !callEnded ? (
+                    <div>
+                        <video 
+                            ref={ userVideo }
+                            playsInline
+                            autoPlay
+                            muted
+                            className={toggle ? 'smallVideoCall' : 'largeVideoCall'}
+                            onClick={() => setToggle((prev) => !prev)}
+                        ></video>
+                    </div>  
+                ) : null
+            }  
 
             {/* my video */}
             {
@@ -54,7 +59,7 @@ export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream }
                     <div>
                         <video
                             ref={ myVideo }
-                            src={ myVideo }
+                            muted
                             playsInline
                             autoPlay
                             className={`${toggle ? 'largeVideoCall' : 'smallVideoCall'} ${
@@ -69,9 +74,16 @@ export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream }
     </div>
     {/* ringing */}
     {
-        receiveingCall && !callAccepted && (
-            <Ringing call={ call } setCall={ setCall } />
-        )
+        receiveingCall && !callAccepted ? (
+            <Ringing call={ call } setCall={ setCall } answerCall={ answerCall } />
+        ) : null
+    }
+
+    {
+        // calling ringtone
+        !callAccepted && show ? (
+            <audio src="../../../../audio/ringing.mp3" autoPlay loop></audio>
+        ) : null
     }
     </>
   )

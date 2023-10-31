@@ -1,7 +1,7 @@
 import { ArrowIcon, DialIcon, MuteIcon, SpeakerIcon, VideoDialIcon } from "../../../svg"
 
 
-export const CallActions = () => {
+export const CallActions = ({ endCall = () => {} }) => {
   return (
     <div className='h-22 w-full absolute bottom-0 z-40 px-1' >
 

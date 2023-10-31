@@ -29,6 +29,7 @@ import AddContactIcon from "./AddContact";
 import DialIcon from "./Dial";
 import SpeakerIcon from "./Speaker";
 import VideoDialIcon from "./VideoDial";
+import VideoCallIcon from "./VIdeoCall";
 
 export {
   CommunityIcon,
@@ -61,5 +62,6 @@ export {
   AddContactIcon,
   DialIcon,
   SpeakerIcon,
-  VideoDialIcon
+  VideoDialIcon,
+  VideoCallIcon
 };

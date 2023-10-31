@@ -8,7 +8,7 @@ import ChatActions from "./actions/ChatActions"
 import { checkOnlineStatus } from "../../utils/chat"
 import { FilesPreview } from "./preview/files/FilesPreview"
 
-export const ChatContainer = ({ onlineUsers, typing }) => {
+export const ChatContainer = ({ onlineUsers, typing, callUser }) => {
 
     const dispatch = useDispatch()
     const { activeConversation, files } = useSelector((state) => state.chat)
@@ -37,6 +37,7 @@ export const ChatContainer = ({ onlineUsers, typing }) => {
             <ChatHeader 
                 online={checkOnlineStatus(onlineUsers, user, activeConversation.users)}
                 typing={ typing }
+                callUser={ callUser }
             />
 
             {

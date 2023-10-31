@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { CloseIcon } from "../../../svg"
 import ValidIcon from "../../../svg/Valid"
+import { capitalize } from "../../../utils/strings";
 
 
 export const Ringing = ({ call, setCall }) => {
 
     const [timer, setTimer] = useState(0);
     const { receiveingCall, callEnded } = call
+
+    console.log(call)
     
     let interval
 
@@ -33,13 +36,13 @@ export const Ringing = ({ call, setCall }) => {
             {/* call info */}
             <div className='flex items-center gap-x-2' >
                 <img
-                    src={`https://elcomercio.pe/resizer/SslpKkpxKFsrc-RY0ADR1-N2avo=/1200x900/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/CIE2IRCYRZC3BGDX5Z2ATL7GMA.png`}
+                    src={call?.picture}
                     alt={`caller profile picture`}
-                    className="w-28 h-28 rounded-full"
+                    className="w-24 h-24 rounded-full"
                 />
                 <div>
                     <h1 className='dark:text-white' >
-                        <b>Rick</b>
+                        <b>{ capitalize(call?.name) }</b>
                     </h1>
                     <span className='dark:text-dark_text_2' >Whatsapp video...</span>
                 </div>

@@ -6,7 +6,7 @@ import { Header } from "./Header"
 import { Ringing } from "./Ringing"
 
 
-export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream, answerCall, show }) => {
+export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream, answerCall, show, endCall, totalSecInCall, setTotalSecInCall }) => {
 
     const { name, picture, receiveingCall, callEnded } = call
     const [showActions, setShowActions] = useState(false)
@@ -29,10 +29,13 @@ export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream, 
 
                 <CallArea 
                     name={ name }
+                    totalSecInCall={ totalSecInCall }
+                    setTotalSecInCall={ setTotalSecInCall }
+                    callAccepted={ callAccepted }
                 />
 
                 {
-                    showActions ? <CallActions /> : null
+                    showActions ? <CallActions endCall={ endCall } /> : null
                 }
 
             </div>
@@ -75,7 +78,7 @@ export const Call = ({ call, setCall, callAccepted, myVideo, userVideo, stream, 
     {/* ringing */}
     {
         receiveingCall && !callAccepted ? (
-            <Ringing call={ call } setCall={ setCall } answerCall={ answerCall } />
+            <Ringing call={ call } setCall={ setCall } answerCall={ answerCall } endCall={ endCall } />
         ) : null
     }
 

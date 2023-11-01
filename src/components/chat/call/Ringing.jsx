@@ -4,7 +4,7 @@ import ValidIcon from "../../../svg/Valid"
 import { capitalize } from "../../../utils/strings";
 
 
-export const Ringing = ({ call, setCall, answerCall }) => {
+export const Ringing = ({ call, setCall, answerCall, endCall }) => {
 
     const [timer, setTimer] = useState(0);
     const { receiveingCall, callEnded } = call
@@ -50,7 +50,7 @@ export const Ringing = ({ call, setCall, answerCall }) => {
 
             {/* actions */}
             <ul className='flex items-center gap-x-2' >
-                <li>
+                <li onClick={ endCall } >
                     <button className='w-10 h-10 flex items-center justify-center rounded-full bg-red-500' >
                         <CloseIcon className='fill-white w-5' />
                     </button>

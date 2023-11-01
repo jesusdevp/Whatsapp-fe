@@ -27,6 +27,7 @@ const Home = ({ socket }) => {
   const [call, setCall] = useState(callData)
   const [stream, setStream] = useState(null)
   const [callAccepted, setCallAccepted] = useState(false)
+  const [totalSecInCall, setTotalSecInCall] = useState(0)
   const [show, setShow] = useState(false)
   const myVideo = useRef()
   const userVideo = useRef()
@@ -48,13 +49,15 @@ const Home = ({ socket }) => {
   }, [ user ])
 
   useEffect(() => {
+      // setupMedia()
+      //   .then((stream) => {
+      //     setStream(stream)
+      //   })
+      //   .catch((error) => {
+      //     console.error('Error al obtener el flujo de medios', error)
+      //   })
+
       setupMedia()
-        .then((stream) => {
-          setStream(stream)
-        })
-        .catch((error) => {
-          console.error('Error al obtener el flujo de medios', error)
-        })
 
       socket.on('setup socket', (id) => {
         setCall({ ...call, socketId: id });
@@ -69,6 +72,18 @@ const Home = ({ socket }) => {
           signal: data.signal,
           receiveingCall: true,
          })
+      })
+
+      socket.on('end call', () => {
+        setCall({
+          ...call,
+          callEnded: true,
+          receiveingCall: false
+        })
+        setShow(false)
+        myVideo.current.srcObject = null;
+
+        if(callAccepted)  conectionRef?.current?.destroy();
       })
   }, [])
 
@@ -134,21 +149,45 @@ const Home = ({ socket }) => {
       userVideo.current.srcObject = stream
     })
 
-    peer.signal(call.signal)
+    peer.signal(call?.signal)
     conectionRef.current = peer
   }
 
-  const setupMedia = () => {
-  return new Promise((resolve, reject) => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
-      .then((stream) => {
-        resolve(stream);
-      })
-      .catch((error) => {
-        reject(error);
-      });
-  });
+  // end call function
+  const endCall = () => {
+    setShow(false)
+    setCall({
+      ...call,
+      callEnded: true,
+      receiveingCall: false
+    })
+
+    myVideo.current.srcObject = null;
+
+    socket.emit('end call', call.socketId);
+
+    conectionRef?.current?.destroy();
+  }
+
+//   const setupMedia = () => {
+//   return new Promise((resolve, reject) => {
+//     navigator.mediaDevices
+//       .getUserMedia({ video: true, audio: true })
+//       .then((stream) => {
+//         resolve(stream);
+//       })
+//       .catch((error) => {
+//         reject(error);
+//       });
+//   });
+// };
+
+const setupMedia = () => {
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    .then((stream) => {
+      setStream(stream);
+    });
 };
 
   const enableMedia = () => {
@@ -207,6 +246,9 @@ const Home = ({ socket }) => {
           stream={ stream }
           answerCall={ answerCall }
           show={ show }
+          endCall={ endCall }
+          totalSecInCall={ totalSecInCall }
+          setTotalSecInCall={ setTotalSecInCall }
         />
       </div>
     </>

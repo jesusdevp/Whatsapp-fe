@@ -49,15 +49,13 @@ const Home = ({ socket }) => {
   }, [ user ])
 
   useEffect(() => {
-      // setupMedia()
-      //   .then((stream) => {
-      //     setStream(stream)
-      //   })
-      //   .catch((error) => {
-      //     console.error('Error al obtener el flujo de medios', error)
-      //   })
-
       setupMedia()
+        .then((stream) => {
+          setStream(stream)
+        })
+        .catch((error) => {
+          console.error('Error al obtener el flujo de medios', error)
+        })
 
       socket.on('setup socket', (id) => {
         setCall({ ...call, socketId: id });
@@ -169,25 +167,17 @@ const Home = ({ socket }) => {
     conectionRef?.current?.destroy();
   }
 
-//   const setupMedia = () => {
-//   return new Promise((resolve, reject) => {
-//     navigator.mediaDevices
-//       .getUserMedia({ video: true, audio: true })
-//       .then((stream) => {
-//         resolve(stream);
-//       })
-//       .catch((error) => {
-//         reject(error);
-//       });
-//   });
-// };
-
-const setupMedia = () => {
-  navigator.mediaDevices
-    .getUserMedia({ video: true, audio: true })
-    .then((stream) => {
-      setStream(stream);
-    });
+  const setupMedia = () => {
+  return new Promise((resolve, reject) => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true, audio: true })
+      .then((stream) => {
+        resolve(stream);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
 
   const enableMedia = () => {

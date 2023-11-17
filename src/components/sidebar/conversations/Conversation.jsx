@@ -15,6 +15,7 @@ const Conversation = ({ conver, socket, online, typing }) => {
 
     const values = {
         receiver_id: getConversationById( user, conver.users ),
+        isGroup: conver.isGroup ? conver._id : false,
         token
     }
 
@@ -40,14 +41,16 @@ const Conversation = ({ conver, socket, online, typing }) => {
                 {/* user picture conversation */}
                 <div className={`relative h-[50px] min-w-[50px] max-w-[50px] rounded-full overflow-hidden ${ online ? 'online' : ''}`}>
                     <img 
-                        src={ getConversationByPicture(user, conver.users) } 
+                        src={ conver.isGroup ? conver.picture : getConversationByPicture(user, conver.users) } 
                         alt='picture'
                         className='w-full h-full object-cover' 
                     />
                 </div>
                 {/* Conversation name and message */}
                 <div className='w-full flex flex-col' >
-                    <h1 className='font-bold flex items-center gap-x-2' > { capitalize( getConversationByName(user, conver.users) ) } </h1>
+                    <h1 className='font-bold flex items-center gap-x-2' > 
+                        { conver.isGroup ? conver.name : capitalize( getConversationByName(user, conver.users) ) } 
+                    </h1>
 
                     <div>
                         <div className='flex items-center gap-x-1 dark:text-dark_text_2'  >

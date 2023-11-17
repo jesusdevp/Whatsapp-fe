@@ -14,14 +14,14 @@ export const Conversations = ({ onlineUsers, typing }) => {
         {
             conversations && 
                 conversations
-                    .filter((c) => c.latestMessage || c._id === activeConversation._id)
+                    .filter((c) => c.latestMessage || c._id === activeConversation._id || c.isGroup === true)
                     .map((conver) => {
                         let check = checkOnlineStatus(onlineUsers, user, conver.users)
                        return  (
                             <Conversation
                                 key={ conver._id }
                                 conver={ conver }
-                                online={ check ? true : false }
+                                online={ !conver.isGroup && check ? true : false }
                                 typing={ typing }
                             />
                        )

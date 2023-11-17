@@ -1,7 +1,7 @@
 import Select from 'react-select'
 
 
-export const MultipleSelect = ({ searchResults, selectedUsers, setSelectedUsers, handleSearch }) => {
+export const MultipleSelect = ({ searchResults, setSelectedUsers, handleSearch }) => {
   return (
     <div className='mt-4' >
         <Select 

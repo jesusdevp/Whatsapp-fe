@@ -8,22 +8,26 @@ export const ChatHeader = ({ online, typing, callUser }) => {
     const { activeConversation } = useSelector((state) => state.chat)
     const { user } = useSelector((state) => state.user)
 
-    const { picture } = activeConversation;
-
   return (
     <div className='h-[59px] dark:bg-dark_bg_2 flex items-center px16 select-none' >
         <div className='w-full flex items-center justify-between' >
             <div className='flex items-center gap-x-4' >
                 <button className='btn' >
                     <img 
-                        src={ getConversationByPicture(user, activeConversation.users) } 
-                        alt={`${ picture } picture`} 
+                        src={ activeConversation.isGroup 
+                            ? activeConversation.picture 
+                            : getConversationByPicture(user, activeConversation.users) 
+                        } 
+                        alt={`${ activeConversation.picture } picture`} 
                         className='w-full h-full rounded-full object-cover' 
                     />
                 </button>
                 <div className='flex flex-col' >
                     <h1 className='dark:text-white text-md font-bold' >
-                        { capitalize(getConversationByName(user, activeConversation.users).split(' ')[0]) }
+                        { activeConversation.isGroup 
+                        ? activeConversation.name 
+                        : capitalize(getConversationByName(user, activeConversation.users).split(' ')[0]) 
+                        }
                     </h1>
                     <span className='text-xs dark:text-dark_svg_2' >{ typing === activeConversation._id ? 'typing...' :  online ? "online" : '' }</span>
                 </div>

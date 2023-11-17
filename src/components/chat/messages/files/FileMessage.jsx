@@ -12,7 +12,19 @@ export const FileMessage = ({ file, message, me }) => {
     }`} 
 >
     {/* container */}
-    <div>
+    <div className='relative'>
+        {/* user message sender */}
+        {
+            !me && message.conversation.isGroup && (
+                <div className='absolute top-1 left-[-40px]'>
+                    <img 
+                        src={ message.sender.picture } 
+                        alt=''
+                        className='w-8 h-8 rounded-full'
+                    />
+                </div>
+            )
+        }
         <div className={`relative h-full dark:text-dark_text_1 rounded-lg 
             ${ me ? 'border-[3px] border-green_3' : 'dark:bg-dark_bg_2' } 
             ${

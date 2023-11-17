@@ -2,10 +2,11 @@ import { useState } from "react"
 import { ReturnIcon } from "../../../../svg"
 import { UnderlineInput } from "./UnderlineInput"
 import { MultipleSelect } from "./MultipleSelect"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { ClipLoader } from "react-spinners"
 import ValidIcon from "../../../../svg/Valid"
+import { createGroupConversation } from "../../../../features/chatSlice"
 
 
 export const CreateGroup = ({ setShowCreateGroup }) => {
@@ -16,6 +17,7 @@ export const CreateGroup = ({ setShowCreateGroup }) => {
     const [name, setName] = useState('')
     const [searchResults, setSearchResults] = useState([])
     const [selectedUsers, setSelectedUsers] = useState([])
+    const dispatch = useDispatch()
 
     const handleSearch = async (e) => {
 
@@ -58,8 +60,24 @@ export const CreateGroup = ({ setShowCreateGroup }) => {
   
       }
 
-    const createGroupHandler = () => {
+    const createGroupHandler = async () => {
+        if (status !== 'loading') {
 
+            let users = [];
+
+            selectedUsers.forEach((user) => {
+              users.push(user.value);
+            })
+
+            let values = {
+              name,
+              users,
+              token: user.token,
+            }
+
+            let newConver = await dispatch(createGroupConversation(values));
+            setShowCreateGroup(false);
+          }
     }
 
   return (

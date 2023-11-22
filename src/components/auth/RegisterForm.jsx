@@ -6,7 +6,7 @@ import { AuthInput } from "./AuthInput";
 import { useDispatch, useSelector } from "react-redux";
 import { SyncLoader } from "react-spinners";
 import { Link, useNavigate } from "react-router-dom";
-import { changeStatus, registerUser, resetError } from "../../features/userSlice";
+import { changeStatus, checkEmailUser, registerUser, resetError } from "../../features/userSlice";
 import { Picture } from "./Picture";
 import axios from "axios";
 
@@ -37,8 +37,9 @@ export const RegisterForm = () => {
 
     dispatch(changeStatus('loading'))
 
-    if( picture ) {
-        
+    const resp = await dispatch( checkEmailUser(data.email) )
+    
+    if( picture && resp.payload.existEmailDB === false ) {
         let res;
 
         await uploadImage().then( async (response) => {

@@ -84,7 +84,7 @@ export const LoginForm = () => {
                 </button>
 
                 <p className='flex flex-col items-center justify-center mt-10 text-center text-md dark:text-dark_text_1' >
-                    <span>ou do not have an account ?</span>
+                    <span>You do not have an account ?</span>
                     <Link 
                         to='/register'
                         className=' hover:underline cursor-pointer transition ease-in duration-300'

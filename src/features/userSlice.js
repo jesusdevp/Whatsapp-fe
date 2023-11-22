@@ -72,6 +72,23 @@ export const logoutUser = createAsyncThunk('auth/logout', async( _, { rejectWith
 
 })
 
+export const checkEmailUser = createAsyncThunk('auth/checkemail', async(email, { rejectWithValue }) => {
+
+    try {
+        
+        const { data } = await axios.post(`${ AUTH_ENDPOINT }/checkemail`, {
+            email
+        })
+
+        return data;
+        
+
+    } catch (error) {
+        return rejectWithValue(error.response)
+    }
+
+})
+
 export const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -129,6 +146,10 @@ export const userSlice = createSlice({
             state.user = action.payload.user
         })
         .addCase(checkTokenUser.rejected, (state, action) => {
+            state.status = 'failed',
+            state.error = action.payload
+        })
+        .addCase(checkEmailUser.rejected, (state, action) => {
             state.status = 'failed',
             state.error = action.payload
         })

@@ -1,18 +1,25 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { CallIcon, DotsIcon, SearchLargeIcon, VideoCallIcon } from "../../../svg"
 import { capitalize } from "../../../utils/strings"
 import { getConversationByName, getConversationByPicture } from "../../../utils/chat"
+import { openModal } from "../../../features/userSlice"
 
 export const ChatHeader = ({ online, typing, callUser }) => {
 
     const { activeConversation } = useSelector((state) => state.chat)
     const { user } = useSelector((state) => state.user)
 
+    const dispatch = useDispatch()
+
+    const handleOpenModal = () => {
+        dispatch(openModal(activeConversation))
+    }
+
   return (
     <div className='h-[59px] dark:bg-dark_bg_2 flex items-center px16 select-none' >
         <div className='w-full flex items-center justify-between' >
             <div className='flex items-center gap-x-4' >
-                <button className='btn' >
+                <button className='btn' onClick={() => handleOpenModal()} >
                     <img 
                         src={ activeConversation.isGroup 
                             ? activeConversation.picture 

@@ -7,6 +7,7 @@ import { ChatContainer, WhatsAppHome } from "../components/chat"
 import SocketContext from "../context/SocketContext"
 import { Call } from "../components/chat/call/Call"
 import { getConversationById, getConversationByName, getConversationByPicture } from "../utils/chat"
+import { changeToggle } from "../features/userSlice";
 
 const callData = {
   socketId: '',
@@ -20,7 +21,7 @@ const callData = {
 const Home = ({ socket }) => {
 
   const dispatch = useDispatch()
-  const { user } = useSelector((state) => state.user)
+  const { user, toggle } = useSelector((state) => state.user)
   const { activeConversation } = useSelector((state) => state.chat)
   const [ onlineUsers, setOnlineUsers ] = useState([])
   const [typing, setTyping] = useState(false)
@@ -211,9 +212,17 @@ const Home = ({ socket }) => {
  
   }, [])
 
+  const handleToggleUI = () => {
+
+    if (toggle === 'emoji') return
+    if(toggle !== '') {
+        dispatch(changeToggle(''))
+    }
+}
+
   
   return (
-   <>
+   <div onClick={() => handleToggleUI()} >
        <div className='h-screen w-screen dark:bg-dark_bg_1 flex items-center justify-center overflow-hidden' >
 
       <div className='container h-screen flex' >
@@ -241,7 +250,7 @@ const Home = ({ socket }) => {
           setTotalSecInCall={ setTotalSecInCall }
         />
       </div>
-    </>
+    </div>
   )
 }
 

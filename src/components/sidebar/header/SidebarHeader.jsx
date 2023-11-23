@@ -1,21 +1,34 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { ChatIcon, CommunityIcon, DotsIcon, StoryIcon } from '../../../svg'
 import { useState } from "react"
 import { Menu } from "./Menu"
 import { CreateGroup } from "./createGroup/CreateGroup"
+import { changeToggle, openModal } from "../../../features/userSlice"
+import { ModalImage } from "../../ui/ModalImage"
 
 export const SidebarHeader = () => {
 
-    const { user } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+    const { user, toggle } = useSelector((state) => state.user)
 
-    const [showMenu, setShowMenu] = useState(false)
     const [showCreateGroup, setShowCreateGroup] = useState(false)
+
+    const handleToggleMenu = () => {
+        if(toggle === '') {
+            dispatch(changeToggle('menu'))
+        }
+    }
+
+    function openModalUI() {
+        dispatch(openModal(user))
+      }
+    
 
   return (
     <>
     <div className='h-[58px] dark:bg-dark_bg_2 flex items-center px16' >
         <div className='w-full flex items-center justify-between'>
-            <button>
+            <button onClick={() => openModalUI()} >
                 <figure className='btn' >
                     <img 
                         src={ user.picture } 
@@ -40,12 +53,12 @@ export const SidebarHeader = () => {
                         <ChatIcon className='dark:fill-dark_svg_1' />
                     </button>
                 </li>
-                <li className='relative' onClick={() => setShowMenu((prev) => !prev)} >
-                    <button className={`btn ${ showMenu ? 'bg-dark_hover_1' : '' }`} >
+                <li className='relative' onClick={() => handleToggleMenu()} >
+                    <button className={`btn ${ toggle === 'menu' ? 'bg-dark_hover_1' : '' }`} >
                         <DotsIcon className='dark:fill-dark_svg_1' />
                     </button>
                     {
-                        showMenu ? <Menu setShowCreateGroup={ setShowCreateGroup } /> : null
+                        toggle === 'menu' ? <Menu setShowCreateGroup={ setShowCreateGroup } /> : null
                     }
                 </li>
             </ul>
@@ -53,6 +66,7 @@ export const SidebarHeader = () => {
     </div>
 
     { showCreateGroup && <CreateGroup setShowCreateGroup={ setShowCreateGroup } /> }
+    <ModalImage />
     </>
   )
 }

@@ -13,7 +13,9 @@ const initialState = {
         picture: '',
         token: '',
         status: ''
-    }
+    },
+    toggle: '',
+    isOpenModal: null
 }
 
 export const registerUser = createAsyncThunk('auth/register', async( values, { rejectWithValue }) => {
@@ -110,6 +112,12 @@ export const userSlice = createSlice({
         },
         resetError: (state) => {
             state.error = ''
+        },
+        changeToggle: (state, action) => {
+            state.toggle = action.payload
+        },
+        openModal: (state, action) => {
+            state.isOpenModal = action.payload
         }
     },
     extraReducers(builder) {
@@ -119,7 +127,9 @@ export const userSlice = createSlice({
         .addCase(registerUser.fulfilled, (state, action) => {
             state.status = 'succeeded',
             state.error = ''
-            state.user = action.payload.user
+            state.user = action.payload.user,
+            state.toggle = '',
+            state.isOpenModal = null
         })
         .addCase(registerUser.rejected, (state, action) => {
             state.status = 'failed',
@@ -131,7 +141,9 @@ export const userSlice = createSlice({
         .addCase(loginUser.fulfilled, (state, action) => {
             state.status = 'succeeded',
             state.error = ''
-            state.user = action.payload.user
+            state.user = action.payload.user,
+            state.toggle = '',
+            state.isOpenModal = null
         })
         .addCase(loginUser.rejected, (state, action) => {
             state.status = 'failed',
@@ -142,8 +154,10 @@ export const userSlice = createSlice({
         })
         .addCase(checkTokenUser.fulfilled, (state, action) => {
             state.status = 'succeeded',
-            state.error = ''
+            state.error = '',
             state.user = action.payload.user
+            state.toggle = '',
+            state.isOpenModal = null
         })
         .addCase(checkTokenUser.rejected, (state, action) => {
             state.status = 'failed',
@@ -156,6 +170,6 @@ export const userSlice = createSlice({
     }
 })
 
-export const { logout, changeStatus, resetError } = userSlice.actions;
+export const { logout, changeStatus, resetError, changeToggle, openModal } = userSlice.actions;
 
 export default userSlice.reducer;

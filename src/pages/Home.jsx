@@ -79,21 +79,21 @@ const Home = ({ socket }) => {
           callEnded: true,
           receiveingCall: false
         })
+        setCallAccepted(false)
         setShow(false)
         myVideo.current.srcObject = null;
 
         if(callAccepted)  conectionRef?.current?.destroy();
       })
-  }, [])
-
-  
+  }, [callAccepted])
 
   const callUser = () => {
     enableMedia()
     setCall({ 
       ...call, 
       name: getConversationByName(user, activeConversation.users),
-      picture: getConversationByPicture(user, activeConversation.users)
+      picture: getConversationByPicture(user, activeConversation.users),
+      callEnded: false,
     })
 
 
@@ -155,6 +155,7 @@ const Home = ({ socket }) => {
   // end call function
   const endCall = () => {
     setShow(false)
+    setCallAccepted(false)
     setCall({
       ...call,
       callEnded: true,

@@ -31,7 +31,7 @@ export const ChatMessages = ({ typing }) => {
                         message.files?.map((file, i) => (
                             <FileMessage
                                 file={ file }
-                                key={message._id} 
+                                key={message?._id} 
                                 message={ message } 
                                 me={ user._id === message.sender._id}
                             />
@@ -40,7 +40,7 @@ export const ChatMessages = ({ typing }) => {
                     {/* message text */}
                     {message.message.length > 0 ?
                         <Message 
-                        key={message._id} 
+                        key={message?._id} 
                         message={ message } 
                         me={ user._id === message.sender._id} 
                     />

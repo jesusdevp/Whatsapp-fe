@@ -8,8 +8,6 @@ export const Ringing = ({ call, setCall, answerCall, endCall }) => {
 
     const [timer, setTimer] = useState(0);
     const { receiveingCall, callEnded } = call
-
-    console.log(call)
     
     let interval
 
